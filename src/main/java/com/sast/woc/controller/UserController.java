@@ -39,6 +39,7 @@ public class UserController {
     @RequestMapping("/register")
     public String addUser(User user) {
         // todo 这里需要你补全
+        userService.AddUser(user);
         return "success";
     }
 
@@ -51,6 +52,21 @@ public class UserController {
     @PostMapping("/login")
     public Boolean login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
+        if (userName == "" || password == "") {
+            System.out.println("username and pasword should both not empty");
+            return false;
+        }
+        if (userService.NameIfExisted(userName)){
+            if (userService.IfNamePasswordMatch(userName,password)){
+                return  true;
+            }else{
+                System.out.println("UserName and password do not match");
+            }
+        }else{
+            System.out.println("This username doesn't exist");
+            return false;
+        }
+
         return true;
     }
 }

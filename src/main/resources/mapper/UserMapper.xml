@@ -5,4 +5,31 @@
 --         注意，这里这个sql语句只是示例
         SELECT * FROM `user` WHERE user_name =#{value};
     </select>
+
+    <select id="findByName" parameterType="java.lang.String" resultType="com.sast.woc.mapper.UserMapper">
+        SELECT * FROM user WHERE name = #{name}
+    </select>
+
+    <!-- 根据名称删除用户 -->
+    <delete id="deleteByName" parameterType="java.lang.String">
+        DELETE FROM user WHERE name = #{name}
+    </delete>
+
+    <!-- 添加新用户 -->
+    <insert id="AddUser" parameterType="com.sast.woc.mapper.UserMapper">
+        <if test="!NameIfExisted(name)">
+            INSERT INTO user(name, age, email) VALUES (#{name}, #{age}, #{email})
+        </if>
+    </insert>
+
+    <!-- 判断用户名是否存在 -->
+    <select id="NameIfExisted" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT COUNT(1) FROM user WHERE name = #{name}
+    </select>
+
+    <!-- 判断用户名和密码是否匹配 -->
+    <select id="IfNamePasswordMatch" parameterType="java.util.Map" resultType="java.lang.Boolean">
+        SELECT COUNT(1) FROM user WHERE name = #{name} AND password = #{password}
+    </select>
+
 </mapper>
