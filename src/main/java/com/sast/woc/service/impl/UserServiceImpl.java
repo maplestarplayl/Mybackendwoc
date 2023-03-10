@@ -52,4 +52,10 @@ public class UserServiceImpl implements UserService {
         params.put("password", password);
         return userMapper.IfNamePasswordMatch(params);
     }
+    @Override
+    public void SaveToken(String token,String name){
+        Map<String,String> map = new HashMap<>();
+        map.put("token",token);
+        map.put("name",name);
+        userMapper.SaveTokenByName(map);}
 }

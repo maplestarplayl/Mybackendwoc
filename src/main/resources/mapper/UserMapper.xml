@@ -28,6 +28,18 @@
             )
         </if>
     </insert>
+    <!-- 根据名称来保存token -->
+    <update id="SaveTokenByName" parameterType="map">
+        <!-- 首先判断该用户名是否存在 -->
+        <if test="NameIfExisted(name)">
+            <!-- 如果用户名存在，则调用UpdateTokenByName方法更新该用户的Token信息 -->
+            <include refid="UpdateTokenByName"/>
+        </if>
+    </update>
+    <!-- Helper Method -->
+    <update id="UpdateTokenByName" parameterType="map">
+        UPDATE user SET token = #{token} WHERE name = #{name}
+    </update>
 
     <!-- 判断用户名是否存在 -->
     <select id="NameIfExisted" parameterType="java.lang.String" resultType="java.lang.Boolean">

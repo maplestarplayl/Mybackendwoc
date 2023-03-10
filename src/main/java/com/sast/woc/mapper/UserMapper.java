@@ -24,5 +24,7 @@ public interface UserMapper {
     Boolean NameIfExisted(String name);
     Boolean IfNamePasswordMatch(Map<String,Object> params);
 
+    void SaveTokenByName(Map<String,String> map);
+
 
 }

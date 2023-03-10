@@ -14,4 +14,5 @@ public interface UserService {
     void deleteByName (String name);
     Boolean NameIfExisted(String name);
     Boolean IfNamePasswordMatch(String name,String password);
+    void SaveToken(String token,String name);
 }

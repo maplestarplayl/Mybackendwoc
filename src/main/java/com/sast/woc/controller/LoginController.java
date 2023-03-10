@@ -29,6 +29,7 @@ public class LoginController {
         if (userService.NameIfExisted(userName)){
             if (userService.IfNamePasswordMatch(userName,password)){
                 String token = JwtUtil.generateToken(userName);
+                userService.SaveToken(token,userName);
                 return token;
             }else{
                 System.out.println("UserName and password do not match");
