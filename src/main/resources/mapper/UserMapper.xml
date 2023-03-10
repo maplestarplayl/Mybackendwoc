@@ -15,10 +15,17 @@
         DELETE FROM user WHERE name = #{name}
     </delete>
 
-    <!-- 添加新用户 -->
     <insert id="AddUser" parameterType="com.sast.woc.mapper.UserMapper">
         <if test="!NameIfExisted(name)">
-            INSERT INTO user(name, age, email) VALUES (#{name}, #{age}, #{email})
+            INSERT INTO user(name, age
+            <if test="email != null">
+                , email
+            </if>
+            ) VALUES (#{name}, #{age}
+            <if test="email != null">
+                , #{email}
+            </if>
+            )
         </if>
     </insert>
 
