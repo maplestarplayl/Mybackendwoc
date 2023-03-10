@@ -43,30 +43,5 @@ public class UserController {
         return "success";
     }
 
-    /**
-     * 完成登录功能
-     * @param userName 用户名
-     * @param password 密码
-     * @return 如果登录成功返回 {@code true}, 否则 {@code false}
-     */
-    @PostMapping("/login")
-    public Boolean login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
-        // todo 这里需要你补全
-        if (userName == "" || password == "") {
-            System.out.println("username and pasword should both not empty");
-            return false;
-        }
-        if (userService.NameIfExisted(userName)){
-            if (userService.IfNamePasswordMatch(userName,password)){
-                return  true;
-            }else{
-                System.out.println("UserName and password do not match");
-            }
-        }else{
-            System.out.println("This username doesn't exist");
-            return false;
-        }
 
-        return true;
-    }
 }
