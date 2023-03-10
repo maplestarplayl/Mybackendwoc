@@ -14,14 +14,14 @@
     <delete id="deleteByName" parameterType="java.lang.String">
         DELETE FROM user WHERE name = #{name}
     </delete>
-
+    <!-- 添加用户并将其role字段设为0  -->
     <insert id="AddUser" parameterType="com.sast.woc.mapper.UserMapper">
         <if test="!NameIfExisted(name)">
-            INSERT INTO user(name, age
+            INSERT INTO user(name, age, role
             <if test="email != null">
                 , email
             </if>
-            ) VALUES (#{name}, #{age}
+            ) VALUES (#{name}, #{age}, 0
             <if test="email != null">
                 , #{email}
             </if>

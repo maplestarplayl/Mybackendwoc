@@ -18,7 +18,7 @@ public class LoginController {
      * @param password 密码
      * @return 如果登录成功返回 {@code true}, 否则 {@code false}
      */
-    //To be changed by using Token and JWT to refactor the code
+
     @PostMapping("/login")
     public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
