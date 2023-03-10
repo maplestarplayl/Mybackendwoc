@@ -20,23 +20,24 @@ public class LoginController {
      */
     //To be changed by using Token and JWT to refactor the code
     @PostMapping("/login")
-    public Boolean login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
+    public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
         if (userName == "" || password == "") {
             System.out.println("username and pasword should both not empty");
-            return false;
+            return null;
         }
         if (userService.NameIfExisted(userName)){
             if (userService.IfNamePasswordMatch(userName,password)){
-                return  true;
+                String token = JwtUtil.generateToken(userName);
+                return token;
             }else{
                 System.out.println("UserName and password do not match");
             }
         }else{
             System.out.println("This username doesn't exist");
-            return false;
+            return null;
         }
 
-        return true;
+        return null;
     }
 }
