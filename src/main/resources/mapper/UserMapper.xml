@@ -21,7 +21,7 @@
             <if test="email != null">
                 , email
             </if>
-            ) VALUES (#{name}, #{age}, 0
+            ) VALUES (#{name}, #{age}, 'user'
             <if test="email != null">
                 , #{email}
             </if>
