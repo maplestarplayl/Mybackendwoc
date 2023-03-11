@@ -1,6 +1,7 @@
 package com.sast.woc.controller;
 
 import com.sast.woc.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
-
-    public UserService userService;
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -23,8 +24,7 @@ public class LoginController {
     public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
         if (userName == "" || password == "") {
-            System.out.println("username and password should both not empty");
-            return null;
+            return"username and password should both not empty";
         }
         if (userService.NameIfExisted(userName)){
             if (userService.IfNamePasswordMatch(userName,password)){
@@ -32,13 +32,11 @@ public class LoginController {
                 userService.SaveToken(token,userName);
                 return token;
             }else{
-                System.out.println("UserName and password do not match");
+                return "UserName and password do not match";
             }
         }else{
-            System.out.println("This username doesn't exist");
-            return null;
-        }
+            return "This username doesn't exist";
 
-        return null;
+        }
     }
 }

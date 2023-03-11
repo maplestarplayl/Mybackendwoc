@@ -21,10 +21,11 @@ public interface UserMapper {
     User findByName (String name);
     void deleteByName (String name);
     void AddUser(User user);
-    Boolean NameIfExisted(String name);
-    Boolean IfNamePasswordMatch(Map<String,Object> params);
+    int NameIfExisted(String name);
+    int IfNamePasswordMatch(Map<String,Object> params);
 
     void SaveTokenByName(Map<String,String> map);
+
 
 
 }

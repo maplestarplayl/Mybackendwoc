@@ -20,7 +20,7 @@ public class JwtUtil {
      */
     public static String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.getName())
                 .claim("role", user.getRole())
                 .claim("id", user.getId())
                 .signWith(key)

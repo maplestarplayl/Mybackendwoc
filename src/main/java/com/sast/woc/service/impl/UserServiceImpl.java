@@ -43,14 +43,14 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public Boolean NameIfExisted(String name){
-        return userMapper.NameIfExisted(name);
+        return userMapper.NameIfExisted(name) > 0;
     }
     @Override
     public Boolean IfNamePasswordMatch(String name,String password){
         Map<String, Object> params = new HashMap<>();
         params.put("name", name);
         params.put("password", password);
-        return userMapper.IfNamePasswordMatch(params);
+        return userMapper.IfNamePasswordMatch(params) > 0;
     }
     @Override
     public void SaveToken(String token,String name){
