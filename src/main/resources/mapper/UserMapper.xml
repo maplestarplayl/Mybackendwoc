@@ -28,9 +28,8 @@
     </insert>
     <!-- 直接保存token，不需要先检查用户名是否存在 -->
     <update id="SaveTokenByName" parameterType="map">
-        INSERT INTO user (name, token) VALUES (#{name}, #{token}) ON DUPLICATE KEY UPDATE token = #{token}
+        UPDATE user SET token = #{token} WHERE name = #{name}
     </update>
-
     <!-- 判断用户名是否存在 -->
     <select id="NameIfExisted" parameterType="java.lang.String" resultType="int">
         SELECT COUNT(*) FROM user WHERE name = #{name}

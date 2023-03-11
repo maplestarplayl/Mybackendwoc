@@ -23,7 +23,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
-        if (userName == "" || password == "") {
+        if (userName.equals("")  || password.equals("") ) {
             return"username and password should both not empty";
         }
         if (userService.NameIfExisted(userName)){
