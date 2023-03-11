@@ -2,6 +2,7 @@ package com.sast.woc.controller;
 
 import com.sast.woc.entity.User;
 import com.sast.woc.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
     //请仿照 User 补充 Admin 的三层架构并完成接口
     private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;}
     /**
      * 根据用户名删除用户
      * @param userName 用户名
