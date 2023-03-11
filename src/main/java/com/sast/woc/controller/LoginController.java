@@ -23,12 +23,12 @@ public class LoginController {
     public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
         if (userName == "" || password == "") {
-            System.out.println("username and pasword should both not empty");
+            System.out.println("username and password should both not empty");
             return null;
         }
         if (userService.NameIfExisted(userName)){
             if (userService.IfNamePasswordMatch(userName,password)){
-                String token = JwtUtil.generateToken(userName);
+                String token = JwtUtil.generateToken(userService.findByName(userName));
                 userService.SaveToken(token,userName);
                 return token;
             }else{

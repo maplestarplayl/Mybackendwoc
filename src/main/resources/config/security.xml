@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+                                 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置HTTP安全策略 -->
+    <http>
+        <!-- 放行登录和注册请求 -->
+        <intercept-url pattern="/login" access="permitAll"/>
+        <intercept-url pattern="/user/register" access="permitAll" />
+        <!-- 需要USER或ADMIN角色才能访问/user/**路径下的请求 -->
+        <intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
+        <!-- 需要ADMIN角色才能访问/admin/**路径下的请求 -->
+        <intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
+        <!-- 其他请求需要认证后才能访问 -->
+        <intercept-url pattern="/**" access="authenticated"/>
+        <!-- 配置自定义的过滤器 -->
+        <custom-filter before="FORM_LOGIN_FILTER" ref="authFilter"/>
+    </http>
+
+    <!-- 配置用户认证方式 -->
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="user" password="{noop}password" authorities="USER"/>
+                <user name="admin" password="{noop}password" authorities="ADMIN"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- 配置自定义的过滤器 -->
+    <beans:bean id="authFilter" class="com.sast.woc.controller.AuthFilter"/>
+</beans:beans>

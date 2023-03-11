@@ -1,41 +1,54 @@
 package com.sast.woc.controller;
-
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
+import com.sast.woc.entity.*;
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.Date;
-
+@Slf4j
 public class JwtUtil {
-    private static final String SECRET_KEY = "my_secret_key"; // JWT的密钥
-    private static final long EXPIRATION_TIME = 864_000_000; // JWT的过期时间（10天）
+    // 生成Token的密钥
+    private static final Key key = Keys.hmacShaKeyFor("secret".getBytes());
 
-    // 创建JWT
-    public static String generateToken(String subject) {
-        Date now = new Date();
-        Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
+    /**
+     * 生成Token
+     * @param user 用户信息
+     * @return Token字符串
+     */
+    public static String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(subject)
-                .setIssuedAt(now)
-                .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setSubject(user.getUserName())
+                .claim("role", user.getRole())
+                .claim("id", user.getId())
+                .signWith(key)
                 .compact();
     }
 
-    // 验证JWT
-    public static boolean validateToken(String token) {
+    /**
+     * 解析Token，获取用户信息
+     * @param token Token字符串
+     * @return 用户信息
+     */
+    public static Map<String, Object> parseToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-            return true;
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            Map<String, Object> result = new HashMap<>();
+            result.put("id", claims.get("id"));
+            result.put("userName", claims.getSubject());
+            result.put("role", claims.get("role"));
+            return result;
         } catch (Exception e) {
-            return false;
+            // Token不合法，解析失败
+            log.error("parse token error: {}", e.getMessage());
+            return null;
         }
     }
 
-    // 获取JWT中的主题
-    public static String getSubject(String token) {
-        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-        return claims.getSubject();
-    }
 }
