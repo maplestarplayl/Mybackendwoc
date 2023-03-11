@@ -25,6 +25,7 @@ public interface UserMapper {
     int IfNamePasswordMatch(Map<String,Object> params);
 
     void SaveTokenByName(Map<String,String> map);
+    void UserChangeInfo(Map<String,String> map);
 
 
 

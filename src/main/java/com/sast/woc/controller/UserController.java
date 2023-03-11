@@ -2,6 +2,7 @@ package com.sast.woc.controller;
 
 import com.sast.woc.entity.User;
 import com.sast.woc.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,21 @@ public class UserController {
         // todo 这里需要你补全
         userService.AddUser(user);
         return "success";
+    }
+
+    @GetMapping("/info")
+    public String UserRequestInfo(HttpServletRequest request){
+        String token =  AuthFilter.getTokenFromRequest(request);
+        return JwtUtil.getUserNameFromToken(token);
+    }
+
+    @PostMapping("/edit_info")
+    public String UserChangeInfo(HttpServletRequest request,@RequestParam(defaultValue = "") String newname, @RequestParam(defaultValue = "") String newpassword)
+    {
+        String token =  AuthFilter.getTokenFromRequest(request);
+        String oldname = JwtUtil.getUserNameFromToken(token);
+        userService.UserChangeInfo(oldname,newname,newpassword);
+        return "Change Success";
     }
 
 

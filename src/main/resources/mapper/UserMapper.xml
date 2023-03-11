@@ -40,4 +40,8 @@
         SELECT COUNT(*) FROM user WHERE name = #{name} AND password = #{password}
     </select>
 
+    <update id="UserChangeInfo" parameterType="java.util.Map" >
+        UPDATE user SET name=#{newname}, password=#{newpassword} WHERE name=#{oldname}
+    </update>
+
 </mapper>

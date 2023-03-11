@@ -1,6 +1,8 @@
 package com.sast.woc.controller;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import com.sast.woc.entity.*;
@@ -11,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class JwtUtil {
     // 生成Token的密钥
-    private static final Key key = Keys.hmacShaKeyFor("secret".getBytes());
+    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     /**
      * 生成Token
@@ -41,7 +43,7 @@ public class JwtUtil {
                     .getBody();
             Map<String, Object> result = new HashMap<>();
             result.put("id", claims.get("id"));
-            result.put("userName", claims.getSubject());
+            result.put("name", claims.getSubject());
             result.put("role", claims.get("role"));
             return result;
         } catch (Exception e) {
@@ -51,4 +53,27 @@ public class JwtUtil {
         }
     }
 
+    public static String getUserNameFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+    public static boolean isValidToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return true;
+        } catch (Exception e) {
+            // Token不合法，解析失败
+            log.error("parse token error: {}", e.getMessage());
+            return false;
+        }
+    }
 }
+

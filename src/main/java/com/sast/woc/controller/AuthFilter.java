@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -56,5 +57,17 @@ public class AuthFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         // 根据实际情况判断请求是否为查询操作
         return  uri.startsWith("/user") ;
+    }
+    //Helper Method 2
+    public static String getTokenFromRequest(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        token = request.getParameter("token");
+        if (StringUtils.hasText(token)) {
+            return token;
+        }
+        return null;
     }
 }

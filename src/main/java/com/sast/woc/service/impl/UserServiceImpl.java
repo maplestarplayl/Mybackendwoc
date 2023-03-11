@@ -58,4 +58,14 @@ public class UserServiceImpl implements UserService {
         map.put("token",token);
         map.put("name",name);
         userMapper.SaveTokenByName(map);}
+
+    @Override
+    public void UserChangeInfo(String oldname,String newname,String newpassword)
+    {
+        Map<String,String> map = new HashMap<>();
+        map.put("oldname",oldname);
+        map.put("newname",newname);
+        map.put("newpassword",newpassword);
+        userMapper.UserChangeInfo(map);
+    }
 }

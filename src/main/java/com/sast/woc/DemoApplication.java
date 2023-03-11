@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = "com.sast.woc")
+@ComponentScan(basePackages = "com.sast.woc.")
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 
 public class DemoApplication {
