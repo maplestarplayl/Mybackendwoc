@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Author xun
  * @create 2023/1/3 17:13
@@ -41,5 +43,10 @@ public class AdminController {
         // todo 补全代码，你需要去掉下面的 null
 
         return userService.findByName(userName);
+    }
+
+    @GetMapping("show_all")
+    public List<User> getAllUsers() {
+        return userService.findAllUsers();
     }
 }

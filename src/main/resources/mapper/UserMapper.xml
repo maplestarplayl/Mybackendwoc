@@ -43,5 +43,9 @@
     <update id="UserChangeInfo" parameterType="java.util.Map" >
         UPDATE user SET name=#{newname}, password=#{newpassword} WHERE name=#{oldname}
     </update>
+    <!-- 返回所有user对象 -->
+    <select id="findAllUsers" resultType="com.sast.woc.entity.User">
+        SELECT * FROM user;
+    </select>
 
 </mapper>

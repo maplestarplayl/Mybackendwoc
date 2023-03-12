@@ -4,6 +4,8 @@ import com.sast.woc.entity.User;
 import com.sast.woc.mapper.UserMapper;
 import com.sast.woc.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -67,5 +69,10 @@ public class UserServiceImpl implements UserService {
         map.put("newname",newname);
         map.put("newpassword",newpassword);
         userMapper.UserChangeInfo(map);
+    }
+    @Override
+    public List<User> findAllUsers()
+    {
+        return userMapper.findAllUsers();
     }
 }

@@ -4,6 +4,8 @@ import com.sast.woc.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -26,6 +28,7 @@ public interface UserMapper {
 
     void SaveTokenByName(Map<String,String> map);
     void UserChangeInfo(Map<String,String> map);
+    List<User> findAllUsers();
 
 
 
