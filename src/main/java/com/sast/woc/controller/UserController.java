@@ -51,11 +51,11 @@ public class UserController {
     }
 
     @PostMapping("/edit_info")
-    public String UserChangeInfo(HttpServletRequest request,@RequestParam(defaultValue = "") String newname, @RequestParam(defaultValue = "") String newpassword)
+    public String UserChangeInfo(HttpServletRequest request,@RequestParam(defaultValue = "") String newname, @RequestParam(defaultValue = "") String newpassword,@RequestParam(defaultValue = "") String newemail)
     {
         String token =  AuthFilter.getTokenFromRequest(request);
         String oldname = JwtUtil.getUserNameFromToken(token);
-        userService.UserChangeInfo(oldname,newname,newpassword);
+        userService.UserChangeInfo(oldname,newname,newpassword,newemail);
         return "Change Success";
     }
 

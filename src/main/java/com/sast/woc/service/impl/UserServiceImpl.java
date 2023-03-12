@@ -62,12 +62,13 @@ public class UserServiceImpl implements UserService {
         userMapper.SaveTokenByName(map);}
 
     @Override
-    public void UserChangeInfo(String oldname,String newname,String newpassword)
+    public void UserChangeInfo(String oldname,String newname,String newpassword,String newemail)
     {
         Map<String,String> map = new HashMap<>();
         map.put("oldname",oldname);
         map.put("newname",newname);
         map.put("newpassword",newpassword);
+        map.put("newemail",newemail);
         userMapper.UserChangeInfo(map);
     }
     @Override

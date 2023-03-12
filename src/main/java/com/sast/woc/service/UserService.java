@@ -17,6 +17,6 @@ public interface UserService {
     Boolean NameIfExisted(String name);
     Boolean IfNamePasswordMatch(String name,String password);
     void SaveToken(String token,String name);
-    void UserChangeInfo(String oldname,String newname,String newpassword);
+    void UserChangeInfo(String oldname,String newname,String newpassword,String newemail);
     List<User> findAllUsers();
 }
