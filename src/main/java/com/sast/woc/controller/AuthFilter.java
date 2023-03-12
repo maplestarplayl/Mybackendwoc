@@ -22,10 +22,9 @@ public class AuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
+        String token = request.getHeader("token");
+        if (token != null) {
             // 解析请求头中的Token，获取用户信息
-            String token = header.substring(7);
             Map<String, Object> claims = JwtUtil.parseToken(token);
             if (claims != null )
             {
@@ -60,14 +59,8 @@ public class AuthFilter extends OncePerRequestFilter {
     }
     //Helper Method 2
     public static String getTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
-            return token.substring(7);
-        }
-        token = request.getParameter("token");
-        if (StringUtils.hasText(token)) {
-            return token;
-        }
-        return null;
+        String token = request.getHeader("token");
+
+        return token;
     }
 }
