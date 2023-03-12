@@ -38,25 +38,30 @@ public class UserController {
      * @return 注册成功返回 success
      */
     @RequestMapping("/register")
-    public String addUser(User user) {
+    public ResultData<String> addUser(User user) {
         // todo 这里需要你补全
         userService.AddUser(user);
-        return "success";
+        return ResultData.success("success");
     }
 
     @GetMapping("/info")
-    public String UserRequestInfo(HttpServletRequest request){
+    public ResultData<User> UserRequestInfo(HttpServletRequest request){
         String token =  AuthFilter.getTokenFromRequest(request);
-        return JwtUtil.getUserNameFromToken(token);
+        User user =userService.returnUserByToken(token);
+        if (user == null)
+        {
+            throw new RuntimeException("This token is invalid");
+        }
+        return ResultData.success(user);
     }
 
     @PostMapping("/edit_info")
-    public String UserChangeInfo(HttpServletRequest request,@RequestParam(defaultValue = "") String newname, @RequestParam(defaultValue = "") String newpassword,@RequestParam(defaultValue = "") String newemail)
+    public ResultData<String> UserChangeInfo(HttpServletRequest request, @RequestParam(defaultValue = "") String newname, @RequestParam(defaultValue = "") String newpassword, @RequestParam(defaultValue = "") String newemail)
     {
         String token =  AuthFilter.getTokenFromRequest(request);
         String oldname = JwtUtil.getUserNameFromToken(token);
         userService.UserChangeInfo(oldname,newname,newpassword,newemail);
-        return "Change Success";
+        return ResultData.success("Change Success");
     }
 
 

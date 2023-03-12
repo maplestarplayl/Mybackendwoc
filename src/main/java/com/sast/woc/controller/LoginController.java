@@ -21,21 +21,21 @@ public class LoginController {
      */
 
     @PostMapping("/login")
-    public String login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
+    public ResultData<String> login(@RequestParam(defaultValue = "") String userName, @RequestParam(defaultValue = "") String password) {
         // todo 这里需要你补全
         if (userName.equals("")  || password.equals("") ) {
-            return"username and password should both not empty";
+            throw new RuntimeException("username and password should both not empty");
         }
         if (userService.NameIfExisted(userName)){
             if (userService.IfNamePasswordMatch(userName,password)){
                 String token = JwtUtil.generateToken(userService.findByName(userName));
                 userService.SaveToken(token,userName);
-                return token;
+                return ResultData.success(token);
             }else{
-                return "UserName and password do not match";
+                throw new RuntimeException("UserName and password do not match");
             }
         }else{
-            return "This username doesn't exist";
+            throw new RuntimeException("This username doesn't exist");
 
         }
     }

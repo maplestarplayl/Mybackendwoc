@@ -27,10 +27,10 @@ public class AdminController {
      * @return 删除成功返回 success
      */
     @RequestMapping("/del_user")
-    public String delUser(String userName) {
+    public ResultData<String> delUser(String userName) {
         // todo 补全代码
         userService.deleteByName(userName);
-        return "success";
+        return ResultData.success("success");
     }
 
     /**
@@ -39,14 +39,13 @@ public class AdminController {
      * @return User
      */
     @GetMapping("/find_user_info")
-    public User findUser(String userName) {
+    public ResultData<User> findUser(String userName) {
         // todo 补全代码，你需要去掉下面的 null
-
-        return userService.findByName(userName);
+        return ResultData.success(userService.findByName(userName));
     }
 
     @GetMapping("show_all")
-    public List<User> getAllUsers() {
-        return userService.findAllUsers();
+    public ResultData<List<User>> getAllUsers() {
+        return ResultData.success(userService.findAllUsers());
     }
 }

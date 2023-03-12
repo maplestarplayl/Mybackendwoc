@@ -13,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class AuthFilter extends OncePerRequestFilter {
             return;
         }
         String token = request.getHeader("token");
-        if (token != null) {
+        if (token != null && JwtUtil.isValidToken(token)) {
             // 解析请求头中的Token，获取用户信息
             User user = userService.returnUserByToken(token);
             String role = user.getRole();
@@ -54,12 +55,17 @@ public class AuthFilter extends OncePerRequestFilter {
                         filterChain.doFilter(request, response);
                         return;
                     }
+                    else{
+                        response.setStatus(HttpStatus.FORBIDDEN.value());
+                        response.getWriter().write("Access denied : Not permitted");
+                        return;
+                    }
                 }
             }
         }
         // 用户未登陆或没有操作权限，返回没有权限的提示信息
         response.setStatus(HttpStatus.FORBIDDEN.value());
-        response.getWriter().write("Access denied");
+        response.getWriter().write("Access denied : invalid token");
     }
     //Helper Method
     private boolean isUserRequest(HttpServletRequest request) {

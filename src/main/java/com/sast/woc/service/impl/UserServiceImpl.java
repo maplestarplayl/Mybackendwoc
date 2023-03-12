@@ -32,15 +32,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByName(String name){
-        return userMapper.findByName(name);
+    public User findByName(String name)
+    {
+        User user =userMapper.findByName(name);
+        if (user == null)
+        {
+            throw new RuntimeException("This user do not exist");
+        }
+        return user;
     }
     @Override
-    public void AddUser(User user){
+    public void AddUser(User user)
+    {
+        if (user.getName().equals("") || user.getPassword().equals(""))
+        {
+            throw new RuntimeException("Username and password are both required");
+        }
+        if (userMapper.NameIfExisted(user.getName()) > 0)
+        {
+            throw new RuntimeException("user with the name existed");
+        }
         userMapper.AddUser(user);
     }
     @Override
-    public void deleteByName (String name){
+    public void deleteByName (String name)
+    {
+        if (userMapper.findByName(name) == null)
+        {
+            throw new RuntimeException("This User doesn't exist");
+        }
+        //userMapper.findByName(name);
         userMapper.deleteByName(name);
     }
     @Override
@@ -80,6 +101,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User returnUserByToken(String token)
     {
-        return userMapper.returnUserByToken(token);
+        //return userMapper.returnUserByToken(token);
+        User user = userMapper.returnUserByToken(token);
+        return user;
     }
 }
