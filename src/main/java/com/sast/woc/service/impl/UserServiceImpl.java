@@ -76,4 +76,10 @@ public class UserServiceImpl implements UserService {
     {
         return userMapper.findAllUsers();
     }
+
+    @Override
+    public User returnUserByToken(String token)
+    {
+        return userMapper.returnUserByToken(token);
+    }
 }

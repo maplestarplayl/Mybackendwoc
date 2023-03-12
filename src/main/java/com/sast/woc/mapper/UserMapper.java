@@ -29,6 +29,7 @@ public interface UserMapper {
     void SaveTokenByName(Map<String,String> map);
     void UserChangeInfo(Map<String,String> map);
     List<User> findAllUsers();
+    User returnUserByToken(String token);
 
 
 

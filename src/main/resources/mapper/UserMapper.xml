@@ -10,6 +10,9 @@
         SELECT * FROM user WHERE name = #{name}
     </select>
 
+    <select id="returnUserByToken" parameterType="java.lang.String" resultType="com.sast.woc.entity.User">
+        SELECT * FROM user WHERE token = #{token}
+    </select>
     <!-- 根据名称删除用户 -->
     <delete id="deleteByName" parameterType="java.lang.String">
         DELETE FROM user WHERE name = #{name}

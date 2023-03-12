@@ -19,4 +19,6 @@ public interface UserService {
     void SaveToken(String token,String name);
     void UserChangeInfo(String oldname,String newname,String newpassword,String newemail);
     List<User> findAllUsers();
+
+    User returnUserByToken(String token);
 }

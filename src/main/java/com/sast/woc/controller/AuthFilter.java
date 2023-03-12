@@ -1,18 +1,30 @@
 package com.sast.woc.controller;
 
+import com.sast.woc.entity.User;
+import com.sast.woc.service.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Map;
-
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class AuthFilter extends OncePerRequestFilter {
+
+    private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;}
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -25,17 +37,17 @@ public class AuthFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         if (token != null) {
             // 解析请求头中的Token，获取用户信息
-            Map<String, Object> claims = JwtUtil.parseToken(token);
-            if (claims != null )
+            User user = userService.returnUserByToken(token);
+            String role = user.getRole();
+            if (role != null )
             {
                 // 用户具有操作权限，放行请求
-                String role = (String) claims.get("role");
-                if (role != null && role.equals("ADMIN"))
+                if ( role.equals("Admin"))
                 {
                     // 管理员具有操作权限，放行请求
                     filterChain.doFilter(request, response);
                     return;
-                } else if (role != null && role.equals("user"))
+                } else if ( role.equals("user"))
                 {
                     if (isUserRequest(request))
                     {

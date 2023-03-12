@@ -29,7 +29,6 @@
             </user-service>
         </authentication-provider>
     </authentication-manager>
-
     <!-- 配置自定义的过滤器 -->
     <beans:bean id="authFilter" class="com.sast.woc.controller.AuthFilter"/>
 </beans:beans>
