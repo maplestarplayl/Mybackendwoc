@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
     private UserService userService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+
 
     /**
      * 以下是一个示例，以Get方法请求数据

@@ -21,11 +21,10 @@ import java.util.Map;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class AuthFilter extends OncePerRequestFilter {
-
-    private UserService userService;
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;}
+    private UserService userService;
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

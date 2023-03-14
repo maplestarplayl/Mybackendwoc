@@ -3,6 +3,7 @@ package com.sast.woc.service.impl;
 import com.sast.woc.entity.User;
 import com.sast.woc.mapper.UserMapper;
 import com.sast.woc.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,10 @@ import java.util.HashMap;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserMapper userMapper;
+    @Autowired
+    private  UserMapper userMapper;
 
-    public UserServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+
 
     /**
      * 这是sample方法的具体实现

@@ -36,7 +36,6 @@ public class LoginController {
             }
         }else{
             throw new RuntimeException("This username doesn't exist");
-
         }
     }
 }

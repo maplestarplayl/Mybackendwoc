@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     //请仿照 User 补充 Admin 的三层架构并完成接口
-    private UserService userService;
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;}
+    private UserService userService;
+
+
     /**
      * 根据用户名删除用户
      * @param userName 用户名
